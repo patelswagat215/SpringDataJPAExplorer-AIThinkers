@@ -25,14 +25,20 @@ public class SpringDataJpaExplorerApplication {
 	private void createStudent(StudentDAO studentDAO) {
 		//Create the student object
 		System.out.println("Creating student object");
-		Student tempStudent=new Student("Swagat","Patel","patelswagat215@gmail.com");
+		Student joe=new Student("Joe","Patel","joe215@gmail.com");
+		Student john=new Student("John","Patel","john@gmail.com");
+		Student harry=new Student("Harry","Patel","harry@gmail.com");
+		Student mark=new Student("Mark","Patel","mark@gmail.com");
 		
 		//Save the student object
 		System.out.println("Saving the student");
-		studentDAO.save(tempStudent);
+		studentDAO.save(joe);
+		studentDAO.save(john);
+		studentDAO.save(harry);
+		studentDAO.save(mark);
 		
 		//dislay id of the saved student
-		System.out.println("Saved the student,Generated ID:-"+tempStudent.getId());
+		System.out.println("Saved the students");
 		
 		
 	}
