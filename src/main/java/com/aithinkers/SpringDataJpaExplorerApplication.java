@@ -1,5 +1,7 @@
 package com.aithinkers;
 
+import java.util.List;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,28 +20,97 @@ public class SpringDataJpaExplorerApplication {
 	@Bean
 	public CommandLineRunner commandlinerunner(StudentDAO studentDAO) {
 		return runner -> {
-			createStudent(studentDAO);
+			// createStudent(studentDAO);
+			CreateAndRetrieveStudnt(studentDAO);
+			//retrieveAllStudents(studentDAO);
+			//retrieveByLastName(studentDAO);
+			//updateById(studentDAO);
+			//deleteById(studentDAO);
+			//deleteAll(studentDAO);
 		};
 	}
 
-	private void createStudent(StudentDAO studentDAO) {
-		//Create the student object
-		System.out.println("Creating student object");
-		Student joe=new Student("Joe","Patel","joe215@gmail.com");
-		Student john=new Student("John","Patel","john@gmail.com");
-		Student harry=new Student("Harry","Patel","harry@gmail.com");
-		Student mark=new Student("Mark","Patel","mark@gmail.com");
+	private void deleteAll(StudentDAO studentDAO) {
+		System.out.print("Records are deleting....");
+		Integer deletCount = studentDAO.deleteAll();
+		System.out.print("Records are deleted.... "+deletCount+" Rows are affected");
 		
-		//Save the student object
+	}
+
+	private void deleteById(StudentDAO studentDAO) {
+		//Deleting record
+		studentDAO.delete(3);
+		
+	}
+
+	private void updateById(StudentDAO studentDAO) {
+		//Find Record By ID
+		Student student=studentDAO.findById(1);
+		
+		//Modify the name
+		student.setFirstName("Scooby");
+		
+		//Update the student
+		studentDAO.Update(student);
+		
+		//Show the updated record
+		System.out.println("New Record Is :-"+student);
+		
+	}
+
+	private void retrieveByLastName(StudentDAO studentDAO) {
+		
+		List<Student> studs=studentDAO.findByLastName("Patel");
+		
+		studs.forEach(stud->System.out.println(stud));
+	        
+		
+	}
+
+	private void retrieveAllStudents(StudentDAO studentDAO) {
+		//Fetch all students
+		System.out.println("Fetching all  students");
+		List<Student> allStuds = studentDAO.findAll();
+		
+		//Display List of students
+		System.out.println("Displaying all  students");
+		allStuds.stream().forEach(studs->System.out.println(studs));
+	}
+
+	private void CreateAndRetrieveStudnt(StudentDAO studentDAO) {
+		// Create the student object
+		System.out.println("Creating student object");
+		Student joe = new Student("Joe", "Patel", "joe215@gmail.com");
+
+		// Save the student object
+		System.out.println("Saving the student");
+		studentDAO.save(joe);
+
+		// Find record by ID
+		System.out.println("Getting the student");
+		Student stud = studentDAO.findById(joe.getId());
+
+		System.out.println(stud);
+
+	}
+
+	private void createStudent(StudentDAO studentDAO) {
+		// Create the student object
+		System.out.println("Creating student object");
+		Student joe = new Student("Joe", "Patel", "joe215@gmail.com");
+		Student john = new Student("John", "Patel", "john@gmail.com");
+		Student harry = new Student("Harry", "Patel", "harry@gmail.com");
+		Student mark = new Student("Mark", "Patel", "mark@gmail.com");
+
+		// Save the student object
 		System.out.println("Saving the student");
 		studentDAO.save(joe);
 		studentDAO.save(john);
 		studentDAO.save(harry);
 		studentDAO.save(mark);
-		
-		//dislay id of the saved student
+
+		// dislay id of the saved student
 		System.out.println("Saved the students");
-		
-		
+
 	}
 }
