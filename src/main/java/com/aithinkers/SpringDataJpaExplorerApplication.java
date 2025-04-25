@@ -5,6 +5,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import com.aithinkers.dao.StudentDAO;
+import com.aithinkers.entity.Student;
+
 @SpringBootApplication
 public class SpringDataJpaExplorerApplication {
 
@@ -13,9 +16,24 @@ public class SpringDataJpaExplorerApplication {
 	}
 
 	@Bean
-	public CommandLineRunner commandlinerunner(String args[]) {
+	public CommandLineRunner commandlinerunner(StudentDAO studentDAO) {
 		return runner -> {
-			System.out.println("Hello World");
+			createStudent(studentDAO);
 		};
+	}
+
+	private void createStudent(StudentDAO studentDAO) {
+		//Create the student object
+		System.out.println("Creating student object");
+		Student tempStudent=new Student("Swagat","Patel","patelswagat215@gmail.com");
+		
+		//Save the student object
+		System.out.println("Saving the student");
+		studentDAO.save(tempStudent);
+		
+		//dislay id of the saved student
+		System.out.println("Saved the student,Generated ID:-"+tempStudent.getId());
+		
+		
 	}
 }
